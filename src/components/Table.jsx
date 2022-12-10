@@ -34,6 +34,19 @@ function Table() {
       setData(newSortedArr);
     }
   };
+  const handleLastNameSort = (sortWay) => {
+    if (sortWay === "asc") {
+      const newSortedArr = [...data].sort((a, b) =>
+        a.last_name.localeCompare(b.last_name)
+      );
+      setData(newSortedArr);
+    } else if (sortWay === "desc") {
+      const newSortedArr = [...data].sort((a, b) =>
+        b.last_name.localeCompare(a.last_name)
+      );
+      setData(newSortedArr);
+    }
+  };
 
   /// delete
 
@@ -52,7 +65,10 @@ function Table() {
                 <tr>
                   <TableHead text={"ID"} />
                   <TableHead text={"First Name"} handleSort={handleNameSort} />
-                  <TableHead text={"Last Name"} />
+                  <TableHead
+                    text={"Last Name"}
+                    handleSort={handleLastNameSort}
+                  />
                   <TableHead text={"Email"} />
                   <TableHead text={"Gender"} />
                   <TableHead text={"IP Address"} />
