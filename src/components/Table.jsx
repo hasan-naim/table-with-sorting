@@ -18,25 +18,63 @@ function Table() {
       setTableHeading(result);
     }
   }, [data]);
-  //   ['id', 'first_name', 'last_name', 'email', 'gender', 'ip_address', 'airport code', 'time', 'status', 'mobile', 'area', 'show', 'edit']
+
+  /// sorting
+
+  const handleNameSort = (sortWay) => {
+    if (sortWay === "asc") {
+      const newSortedArr = [...data].sort((a, b) =>
+        a.first_name.localeCompare(b.first_name)
+      );
+      setData(newSortedArr);
+    } else if (sortWay === "desc") {
+      const newSortedArr = [...data].sort((a, b) =>
+        b.first_name.localeCompare(a.first_name)
+      );
+      setData(newSortedArr);
+    }
+  };
+
+  /// delete
+
+  const handleDelete = (id) => {
+    const newData = data.filter((dt) => dt.id !== id);
+    setData(newData);
+  };
 
   return (
-    <div className="flex flex-col w-[98%] h-[95vh] overflow-y-auto">
+    <div className="flex flex-col w-[98%] h-[95vh] overflow-y-auto scrollbar scrollbar-thumb-gray-900 scrollbar-track-gray-100">
       <div className="overflow-x-auto sm:mx-0.5 lg:mx-0.5">
         <div className="py-2 inline-block min-w-full sm:px-6 ">
           <div className="overflow-hidden">
             <table className="min-w-full">
               <thead className="bg-gray-200 border-b">
                 <tr>
-                  {tableHeading &&
-                    tableHeading.map((th, i) => {
-                      return <TableHead text={th} key={i} />;
-                    })}
+                  <TableHead text={"ID"} />
+                  <TableHead text={"First Name"} handleSort={handleNameSort} />
+                  <TableHead text={"Last Name"} />
+                  <TableHead text={"Email"} />
+                  <TableHead text={"Gender"} />
+                  <TableHead text={"IP Address"} />
+                  <TableHead text={"Airport Code"} />
+                  <TableHead text={"Time"} />
+                  <TableHead text={"Status"} />
+                  <TableHead text={"mobile"} />
+                  <TableHead text={"area"} />
+                  <TableHead text={"show"} />
+                  <TableHead text={"edit"} />
+                  <TableHead text={"Delete"} />
                 </tr>
               </thead>
               <tbody>
                 {data &&
-                  data.map((obj) => <TableRow key={obj.id} info={obj} />)}
+                  data.map((obj) => (
+                    <TableRow
+                      key={obj.id}
+                      info={obj}
+                      handleDelete={handleDelete}
+                    />
+                  ))}
               </tbody>
             </table>
           </div>
